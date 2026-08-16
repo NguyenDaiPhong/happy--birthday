@@ -24,10 +24,10 @@
       pointer-events: none;
     }
 
-    /* === CLASS ĐẶC BIỆT CHỈ DÀNH CHO CHỮ MOONZZZ === */
+    /* === CLASS ĐẶC BIỆT DÀNH CHO CHỮ MOONZZZ NGOÀI CAPTION === */
     .moon-font {
       font-family: 'Caveat', cursive;
-      font-size: 1.1em; 
+      font-size: 1.3em; 
       font-weight: 700;
     }
 
@@ -278,6 +278,7 @@
   <div class="sparkle" style="bottom: 10%; right: 20%; animation-delay: 0.2s;"></div>
   <img src="https://png.pngtree.com/png-clipart/20220125/original/pngtree-gift-box-gift-box-png-image_7213113.png" alt="Gift box" class="gift-box">
 </div>
+<!-- Dùng thẻ span để lấy lại font Caveat cho chữ Moonzzz -->
 <div class="gift-message" id="giftMessage"><span class="moon-font">Moonzzz</span> mở quà đi nàoo 🎁</div>
 
 <!-- KHUNG CHỨA 1 ẢNH DUY NHẤT -->
@@ -304,6 +305,7 @@ let clickState = -1; // -1: Intro, 0: Cake, 1: Gift, 2: Slideshow, 3: Letter
 let cakeOpacity = 0; 
 let animationStarted = false;
 
+// Đã trả lại font đặc biệt (Caveat) cho màn intro
 const introTexts = [
   "Này <span class='moon-font'>Moonzzz</span>...",
   "Hôm nay là một ngày đặc biệt nhỉ?",
@@ -374,8 +376,6 @@ const candles = [
 ];
 const confetti = [];
 const flyingHearts = []; 
-
-// Mảng chứa bong bóng nước (để rỗng ban đầu)
 const waterBubbles = [];
 
 window.addEventListener('resize', () => {
@@ -385,13 +385,11 @@ window.addEventListener('resize', () => {
   cake.y = H / 2 + 50;
 });
 
-// === CÁC HÀM VẼ CANVAS ===
 function drawWaterBubbles() {
-  // Thêm dần bong bóng từ dưới đáy lên giống y hệt như trái tim
   if (waterBubbles.length < 40) {
     waterBubbles.push({
       x: Math.random() * W,
-      y: H + Math.random() * 100, // Bắt đầu từ dưới đáy màn hình
+      y: H + Math.random() * 100, 
       size: 4 + Math.random() * 12,
       speedY: 0.5 + Math.random() * 1.5,
       wobble: Math.random() * Math.PI * 2,
@@ -404,11 +402,9 @@ function drawWaterBubbles() {
     b.wobble += b.wobbleSpeed;
     let currentX = b.x + Math.sin(b.wobble) * 15;
 
-    // Vẽ bong bóng mờ
     ctx.beginPath();
     ctx.arc(currentX, b.y, b.size, 0, Math.PI * 2);
     
-    // Gradient 3D cho bong bóng
     let grad = ctx.createRadialGradient(
       currentX - b.size * 0.3, b.y - b.size * 0.3, b.size * 0.1, 
       currentX, b.y, b.size
@@ -423,7 +419,6 @@ function drawWaterBubbles() {
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    // Điểm nhấn sáng trắng (reflection)
     ctx.beginPath();
     ctx.arc(currentX - b.size * 0.35, b.y - b.size * 0.35, b.size * 0.2, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
@@ -431,9 +426,7 @@ function drawWaterBubbles() {
 
     ctx.restore();
 
-    // Di chuyển bong bóng lên trên
     b.y -= b.speedY;
-    // Nếu bay quá màn hình thì reset lại từ dưới đáy
     if (b.y < -50) {
       b.y = H + 50;
       b.x = Math.random() * W;
@@ -572,7 +565,6 @@ function loop() {
   ctx.clearRect(0, 0, W, H);
   
   if (animationStarted) {
-    // Gọi chung vào cùng một cờ với trái tim và pháo giấy
     drawWaterBubbles();
     drawConfetti();
     drawFlyingHearts();
@@ -608,7 +600,6 @@ function handleInteraction(e) {
             if (cakeOpacity <= 0) {
               cakeOpacity = 0;
               clearInterval(cakeFadeOut);
-              // Kích hoạt cờ này sẽ làm xuất hiện trái tim, pháo giấy và BONG BÓNG NƯỚC
               animationStarted = true;
               document.getElementById("giftBox").style.display = "block";
               document.getElementById("giftMessage").style.display = "block";
@@ -630,6 +621,7 @@ const captionBox = document.getElementById("captionBox");
 const momentContainer = document.getElementById("momentContainer");
 const headerMessage = document.querySelector(".header-message");
 
+// CHỈ CÓ câu caption cuối cùng này là chữ Moonzzz được hiển thị BÌNH THƯỜNG (không kèm thẻ span)
 const slideCaptions = [
   "📸 Một chiếc ảnh mang theo 100% sự dễ thương",
   "🌷 Nhẹ nhàng như nắng, đáng yêu như hoa",
@@ -638,7 +630,7 @@ const slideCaptions = [
   "🌸 Chúc cho những nụ cười luôn ở trên môi",
   "☁️ Chúc cho những ngày buồn sẽ sớm trôi qua",
   "💖 Chúc cho mọi mong ước đều thành hiện thực",
-  "❤️ Luôn hạnh phúc, bình an và cười thật nhiều nha <span class='moon-font'>Moonzzz</span> 🌸"
+  "❤️ Luôn hạnh phúc, bình an và cười thật nhiều nha Moonzzz 🌸"
 ];
 
 let captionIndex = 0;
@@ -693,6 +685,7 @@ function runSingleImageLogic() {
 }
 
 // === FINAL LETTER LOGIC ===
+// Đã trả lại font đặc biệt (Caveat) cho bức thư cuối cùng
 const finalMessage = "💖 Chúc <span class='moon-font'>Moonzzz</span> sinh nhật vui vẻ 💖\n\nMong tuổi mới sẽ mang đến cho cậu thật nhiều niềm vui, thật nhiều tiếng cười và thật nhiều điều may mắn.\nCảm ơn vì đã xuất hiện trong cuộc sống này.\n\n🌷 Hãy luôn hạnh phúc nhé 🌷";
 const letterPopup = document.getElementById("letterPopup");
 const letterContentEl = document.getElementById("letterContent");
