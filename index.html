@@ -215,13 +215,13 @@
       opacity: 1;
     }
 
-    /* === LETTER POPUP GLASSMORPHISM === */
+    /* === LETTER POPUP === */
     .letter-popup {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.8);
       width: 90%;
-      max-width: 600px;
+      max-width: 650px;
       background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(15px);
       border: 2px solid rgba(255, 255, 255, 0.8);
@@ -278,7 +278,6 @@
   <div class="sparkle" style="bottom: 10%; right: 20%; animation-delay: 0.2s;"></div>
   <img src="https://png.pngtree.com/png-clipart/20220125/original/pngtree-gift-box-gift-box-png-image_7213113.png" alt="Gift box" class="gift-box">
 </div>
-<!-- Dùng thẻ span để lấy lại font Caveat cho chữ Moonzzz -->
 <div class="gift-message" id="giftMessage"><span class="moon-font">Moonzzz</span> mở quà đi nàoo 🎁</div>
 
 <!-- KHUNG CHỨA 1 ẢNH DUY NHẤT -->
@@ -305,7 +304,7 @@ let clickState = -1; // -1: Intro, 0: Cake, 1: Gift, 2: Slideshow, 3: Letter
 let cakeOpacity = 0; 
 let animationStarted = false;
 
-// Đã trả lại font đặc biệt (Caveat) cho màn intro
+// Chữ Moonzzz lả lướt
 const introTexts = [
   "Này <span class='moon-font'>Moonzzz</span>...",
   "Hôm nay là một ngày đặc biệt nhỉ?",
@@ -450,14 +449,14 @@ function drawCake() {
     if(ctx.roundRect) ctx.strokeRect(x, y, tierWidth, tierHeight, 10);
 
     ctx.fillStyle = "#ffffff";
-    ctx.beginPath();
     let dripWidth = 20;
     for (let j = 0; j < tierWidth; j += dripWidth) {
+      ctx.beginPath(); 
       let dripOffset = Math.sin((j + i*10) * 0.5) * 8 + 12;
-      ctx.arc(x + j + dripWidth/2, y + 2, dripWidth/2 + 2, Math.PI, 0, true);
-      ctx.arc(x + j + dripWidth/2, y + dripOffset, dripWidth/2, 0, Math.PI, false);
+      ctx.arc(x + j + dripWidth/2, y + 2, dripWidth/2 + 1, Math.PI, 0, true);
+      ctx.arc(x + j + dripWidth/2, y + dripOffset, dripWidth/2 + 1, 0, Math.PI, false);
+      ctx.fill();
     }
-    ctx.fill();
     
     ctx.fillStyle = "#d81b60";
     for(let k = 15; k < tierWidth - 15; k += 40) {
@@ -621,7 +620,7 @@ const captionBox = document.getElementById("captionBox");
 const momentContainer = document.getElementById("momentContainer");
 const headerMessage = document.querySelector(".header-message");
 
-// CHỈ CÓ câu caption cuối cùng này là chữ Moonzzz được hiển thị BÌNH THƯỜNG (không kèm thẻ span)
+// CHỈ CÓ CÂU CUỐI CÙNG LÀ MOONZZZ BÌNH THƯỜNG KHÔNG FONT LẢ LƯỚT
 const slideCaptions = [
   "📸 Một chiếc ảnh mang theo 100% sự dễ thương",
   "🌷 Nhẹ nhàng như nắng, đáng yêu như hoa",
@@ -684,9 +683,8 @@ function runSingleImageLogic() {
   }, CAPTION_DURATION);
 }
 
-// === FINAL LETTER LOGIC ===
-// Đã trả lại font đặc biệt (Caveat) cho bức thư cuối cùng
-const finalMessage = "💖 Chúc <span class='moon-font'>Moonzzz</span> sinh nhật vui vẻ 💖\n\nMong tuổi mới sẽ mang đến cho cậu thật nhiều niềm vui, thật nhiều tiếng cười và thật nhiều điều may mắn.\nCảm ơn vì đã xuất hiện trong cuộc sống này.\n\n🌷 Hãy luôn hạnh phúc nhé 🌷";
+// === FINAL LETTER LOGIC KÈM LỜI CHÚC MỚI VÀ FONT CAVEAT TẠO ĐIỂM NHẤN ===
+const finalMessage = "💖 Chúc <span class='moon-font'>Moonzzz</span> sinh nhật thật vui vẻ 💖\n\nMong tuổi mới bớt đi những âu lo, cười nhiều hơn một chút và được tự do làm những điều mình thích.\nHy vọng mọi cố gắng đều sẽ được đền đáp, mọi mong đợi đều sẽ có hồi âm.\n\n🌷 Chúc những tháng ngày phía trước luôn bình an và ngập tràn yêu thương. 🌷";
 const letterPopup = document.getElementById("letterPopup");
 const letterContentEl = document.getElementById("letterContent");
 const finalMessageChars = [...finalMessage]; 
